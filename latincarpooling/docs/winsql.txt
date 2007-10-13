@@ -1,0 +1,3 @@
+WinSQL Version:  6.0.x.x
+Company Name:    Areko Systems
+Serial Number:   18885141100206076039
