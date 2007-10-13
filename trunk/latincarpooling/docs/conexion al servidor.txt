@@ -1,0 +1,8 @@
+IP: arobirosa.no-ip.org
+Informix Server: ol_guaderio
+Host Name: guaderio
+Service: 1526
+Protocol: onsoctcp
+Database: sysmaster
+User Name: carpooling
+password: ****
