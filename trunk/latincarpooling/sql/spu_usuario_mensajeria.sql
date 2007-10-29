@@ -1,4 +1,5 @@
-drop procedure dbo.spu_usuario_mensajeria;
+drop procedure dbo.spu_usuario_mensajeria
+;
 create procedure dbo.spu_usuario_mensajeria
 (
     id_usuario integer,
@@ -30,12 +31,12 @@ create procedure dbo.spu_usuario_mensajeria
                 where um.uma_id = id_programa
                 and um.uma_uio_id = id_usuario) then
        update usuariomensajeria
-       set pma_nombre = nombre_usuario
-       where um.uma_id = id_programa
-       and um.uma_uio_id = id_usuario;
+       set uma_nombreusuario = nombre_usuario
+       where uma_id = id_programa
+       and uma_uio_id = id_usuario;
     else
         insert into usuariomensajeria
-        (uma_id, uma_uio_id, pma_nombre) values
+        (uma_id, uma_uio_id, uma_nombreusuario) values
         (id_programa, id_usuario, nombre_usuario);
     end if;
 
@@ -60,4 +61,5 @@ document
 '                   - No existe el programa de mensajeria.                              ',
 '                   - No se indicó el nombre de usuario.                                ',
 '                                                                                       '
-with listing in 'informix_warn';
+with listing in 'informix_warn'
+;

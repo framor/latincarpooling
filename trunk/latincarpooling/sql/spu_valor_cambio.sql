@@ -1,4 +1,5 @@
-drop procedure dbo.spu_valor_cambio;
+drop procedure dbo.spu_valor_cambio
+;
 create procedure dbo.spu_valor_cambio
 (
     id_moneda   integer,
@@ -42,31 +43,32 @@ create procedure dbo.spu_valor_cambio
         define vigencia_hasta like valorcambio.vco_vigentedesde;
         define vigencia_anterior like valorcambio.vco_vigentehasta;
 
-        let vigencia_hasta = (select min(vc.vco_vigente_desde)
+        let vigencia_hasta = (select min(vc.vco_vigentedesde)
                             from valorcambio vc
                             where vc.vco_mda_id = id_moneda
-                            and vc.vco_vigente_desde > vigente_desde);
+                            and vc.vco_vigentedesde > vigente_desde);
 
         if vigencia_hasta is not null then
             let vigencia_hasta = vigencia_hasta - 1 units day;
+        end if;
+
+        --Modificamos la vigencia anterior a la actual.
+        let vigencia_anterior = (select max(vc.vco_vigentedesde)
+                            from valorcambio vc
+                            where vc.vco_mda_id = id_moneda
+                            and vc.vco_vigentedesde < vigente_desde);
+
+        if vigencia_anterior is not null then
+            update valorcambio
+            set vco_vigentehasta = vigente_desde - 1 units day
+            where vco_mda_id = id_moneda
+            and vco_vigentedesde = vigencia_anterior;
         end if;
 
         insert into valorcambio
         (vco_mda_id, vco_vigentedesde, vco_valordolar, vco_vigentehasta) values
         (id_moneda, vigente_desde, valor_dolar, vigencia_hasta);
 
-        --Modificamos la vigencia anterior a la actual.
-        let vigencia_anterior = (select max(vc.vco_vigente_desde)
-                            from valorcambio vc
-                            where vc.vco_mda_id = id_moneda
-                            and vc.vco_vigente_desde < vigente_desde);
-
-        if vigencia_anterior is not null then
-            update valorcambio
-            set vco_vigente_hasta = vigente_desde - 1 units day
-            where vco_mda_id = id_moneda
-            and vco_vigente_desde = vigencia_anterior;
-        end if;
     end;
     end if;
 
@@ -96,4 +98,5 @@ document
 '                   - No se indicó el tipo de cambio.                                   ',
 '                   - El valor dólar debe ser mayor a cero.                             ',
 '                                                                                       '
-with listing in 'informix_warn';
+with listing in 'informix_warn'
+;
