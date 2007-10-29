@@ -44,9 +44,9 @@ create procedure dbo.spu_precio_combustible
                 and pc.pce_vigentedesde = vigente_desde) then
        update preciocombustible
        set pce_preciolitro = precio_litro
-       where pc.pce_cle_id = id_combustible
-       and pc.pce_pis_id = id_pais
-       and pc.pce_vigentedesde = vigente_desde;
+       where pce_cle_id = id_combustible
+       and pce_pis_id = id_pais
+       and pce_vigentedesde = vigente_desde;
     else
     begin
         define vigencia_hasta like preciocombustible.pce_vigentedesde;
@@ -62,10 +62,6 @@ create procedure dbo.spu_precio_combustible
             let vigencia_hasta = vigencia_hasta - 1 units day;
         end if;
 
-        insert into preciocombustible
-        (pce_cle_id, pce_pis_id, pce_vigentedesde, pce_preciolitro, pce_vigentehasta) values
-        (id_combustible, id_pais, vigente_desde, precio_litro, vigencia_hasta);
-
         --Modificamos la vigencia anterior a la actual.
         let vigencia_anterior = (select max(pc.pce_vigentedesde)
                             from preciocombustible pc
@@ -75,11 +71,15 @@ create procedure dbo.spu_precio_combustible
 
         if vigencia_anterior is not null then
             update preciocombustible
-            set pce_vigente_hasta = vigente_desde - 1 units day
-            where pc.pce_cle_id = id_combustible
-            and pc.pce_pis_id = id_pais                                        
-            and vco_vigente_desde = vigencia_anterior;
+            set pce_vigentehasta = vigente_desde - 1 units day
+            where pce_cle_id = id_combustible
+            and pce_pis_id = id_pais
+            and pce_vigentedesde = vigencia_anterior;
         end if;
+
+        insert into preciocombustible
+        (pce_cle_id, pce_pis_id, pce_vigentedesde, pce_preciolitro, pce_vigentehasta) values
+        (id_combustible, id_pais, vigente_desde, precio_litro, vigencia_hasta);
     end;
     end if;
 
