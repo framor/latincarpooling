@@ -10,7 +10,7 @@ create procedure dbo.sps_verificar_usuario
     if nombre_usuario is null or nombre_usuario = '' then
        RAISE EXCEPTION -746, 0, 'No se ingreso un usuario. [6]';
        return;
-    end if;
+    end if; 
 
     if contrasena_hash is null or contrasena_hash = '' then
        RAISE EXCEPTION -746, 0, 'No se ingreso la contraseña. [7]';
