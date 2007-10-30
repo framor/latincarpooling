@@ -1,20 +1,22 @@
-drop procedure dbo.sps_verificar_usuario;
+drop procedure dbo.sps_verificar_usuario
+;
 create procedure dbo.sps_verificar_usuario
 (
     nombre_usuario char(20),
     contrasena_hash char(255)
+
 ) returning integer;
 
     define id_usuario integer;
 
     if nombre_usuario is null or nombre_usuario = '' then
        RAISE EXCEPTION -746, 0, 'No se ingreso un usuario. [6]';
-       return;
-    end if; 
+       return 0;
+    end if;
 
     if contrasena_hash is null or contrasena_hash = '' then
        RAISE EXCEPTION -746, 0, 'No se ingreso la contraseña. [7]';
-       return;
+       return 0;
     end if;
 
     let id_usuario = (select u.uio_id
@@ -48,5 +50,6 @@ document
 '                   - No se ingresó un usuario.                                         ',
 '                   - No se ingresó la contraseña.                                      ',
 '                                                                                       '
-with listing in 'informix_warn';
+with listing in 'informix_warn'
+;
 
