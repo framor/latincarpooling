@@ -54,6 +54,48 @@ create procedure dbo.spi_datos_tests ();
                 't');
     end if;
 
+    --Agregamos los recorridos de prueba.
+    if not exists (select 1
+                from recorrido) then
+       insert into dbo.recorrido
+       (rdo_id, rdo_cad_id_origen, rdo_cad_id_destino)
+       select tra_id, tra_cad_id1, tra_cad_id2
+       from tramo;
+
+       insert into dbo.ordenrecorrido
+       (oro_rdo_id, oro_tra_id, oro_ordentramo)
+       select tra_id, tra_id, 1
+       from tramo;
+    end if;
+
+    --Insertamos viajes de prueba.
+    if not exists (select 1
+                from viaje
+                where vje_id = 11) then
+        insert into viaje
+        (vje_id, vje_rdo_id, vje_fechamenor, vje_fechamayor, vje_tipoviaje)
+        select rdo_id, rdo_id, (today - rdo_id), (today - rdo_id), 'P'
+        from recorrido
+        where rdo_id > 10;
+
+        insert into viajepasajeropend
+        (vpp_vje_id, vpp_importemaximo, vpp_uoi_id)
+        select rdo_id, 0, 666
+        from recorrido
+        where rdo_id > 10;
+
+        insert into viaje
+        (vje_id, vje_rdo_id, vje_fechamenor, vje_fechamayor, vje_tipoviaje)
+        select rdo_id, rdo_id, (today + rdo_id), (today + rdo_id), 'C'
+        from recorrido
+        where rdo_id <= 10;
+
+        insert into viajeconductor
+        (vcr_vje_id, vcr_uio_id, vcr_cantlugares, vcr_importe, vcr_importeviaje, vcr_lugareslibres)
+        select rdo_id, 666, 3, 0, 15, 3
+        from recorrido
+        where rdo_id <= 10;
+    end if;
 end procedure
 document
 'Fecha de Creacion: 2007-10-28                                                          ',
@@ -74,5 +116,3 @@ execute procedure dbo.spi_datos_tests()
 ;
 drop procedure dbo.spi_datos_tests
 ;
-
-
