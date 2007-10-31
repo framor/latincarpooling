@@ -1,4 +1,5 @@
-drop procedure dbo.spd_viajes_realizados;
+drop procedure dbo.spd_viajes_realizados
+;
 create procedure dbo.spd_viajes_realizados
 (
     fecha_corte date
@@ -12,13 +13,13 @@ create procedure dbo.spd_viajes_realizados
     delete from viajeconductor
     where exists (select 1
                 from viaje v
-                where viajeconductor.vje_id = v.vcr_vje_id
+                where viajeconductor.vcr_vje_id = v.vje_id
                 and v.vje_fechamayor < fecha_corte);
 
     delete from viajepasajeropend
     where exists (select 1
                  from viaje v
-                where viajepasajeropend.vje_id = v.vpp_vje_id
+                where viajepasajeropend.vpp_vje_id = v.vje_id
                 and v.vje_fechamayor < fecha_corte);
 
     delete from viaje
@@ -41,5 +42,6 @@ document
 'Errores Reportados:                                                                    ',
 '                   - La fecha indicada es mayor a la actual.                           ',
 '                                                                                       '
-with listing in 'informix_warn';
+with listing in 'informix_warn'
+;
 
