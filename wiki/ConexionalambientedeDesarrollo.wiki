@@ -1,23 +1,19 @@
-#Instrucciones para conectarse al ambiente de desarrollo.
+= Instrucciones para conectarse al ambiente de desarrollo. =
 
-= Pasos para conectarse al ambiente de desarrollo =
+== Pasos para conectarse al ambiente de desarrollo ==
 
-1. Instalar el SDK de Informix. Trae los drivers ODBC.
-2. Crear una nueva coneccion ODBC con los siguientes datos:
-
-En la solapa General:
-- Data Source Name: ol_guaderio (O Cualquiera)
-- Description: (Cualquiera) 
-
-En la solapa Connection:
-- Server Name: ol_guaderio
-- Host Name: arobirosa.no-ip.org
-- Service: 1526
-- Protocol: olsoctcp
-- Database name: produccion
-- User ID: carpooling
-- Password: (la misma que para la base Postgresql - ver grupo yahoo)
-
-Con estos datos la coneccion deberia funcionar.
-
-3. Utilizando WinSQL o similar conectarse a la base.
+ # Instalar el SDK de Informix. Trae los drivers ODBC.
+ # Crear una nueva coneccion ODBC con los siguientes datos:
+ En la solapa General:
+  * Data Source Name: ol_guaderio (O Cualquiera)
+  * Description: (Cualquiera) 
+ En la solapa Connection:
+  * Server Name: ol_guaderio
+  * Host Name: arobirosa.no-ip.org
+  * Service: 1526
+  * Protocol: olsoctcp
+  * Database name: produccion
+  * User ID: carpooling
+  * Password: (la misma que para la base Postgresql - ver grupo yahoo)
+ Con estos datos la coneccion deberia funcionar.
+ # Utilizando WinSQL o similar conectarse a la base.
