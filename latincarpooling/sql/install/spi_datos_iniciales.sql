@@ -87,6 +87,13 @@ create procedure dbo.spi_datos_iniciales ();
         values (4, 'Jabber');
     end if;
 
+    if not exists (select 1
+                from programamensajeria p
+                where p.pma_id = 5) then
+        insert into programamensajeria (pma_id, pma_nombre)
+        values (5, 'Google');
+    end if;
+
     -- Cargamos los tipos de documentos.
     if not exists (select 1
                 from tipodocumento t
