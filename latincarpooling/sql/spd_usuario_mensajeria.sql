@@ -3,20 +3,20 @@ create procedure dbo.spd_usuario_mensajeria
 (
     id_usuario integer,
     id_programa integer
-);
+) returns integer;
 
     if not exists (select 1
                     from usuario u
                     where u.uio_id = id_usuario) then
        RAISE EXCEPTION -746, 0, 'No existe el usuario. [1]';
-       return;
+       return -1;
     end if;
 
     if not exists (select 1
                     from programamensajeria p
                     where p.pma_id = id_programa) then
        RAISE EXCEPTION -746, 0, 'No existe el programa de mensajeria. [2]';
-       return;
+       return -1;
     end if;
 
     if not exists (select 1
@@ -24,13 +24,14 @@ create procedure dbo.spd_usuario_mensajeria
                where um.uma_id = id_programa
                and um.uma_uio_id = id_usuario) then
        RAISE EXCEPTION -746, 0, 'No existe el nombre de usuario para ese usuario y programa de mensajería. [5]';
-       return;
+       return -1;
     end if;
 
     delete from usuariomensajeria
     where uma_id = id_programa
     and uma_uio_id = id_usuario;
 
+   return 0;
 end procedure
 document
 'Fecha de Creacion: 2007-10-15                                                          ',
@@ -44,7 +45,7 @@ document
 'Descripcion:       Elimina los datos de un usuario de mensajería para el programa y el ',
 '                           usuario indicados.                                          ',
 '                                                                                       ',
-'Resultados:        Ninguno.                                                            ',
+'Resultados:        Cero si no hay errores.                                             ',
 '                                                                                       ',
 'Errores Reportados:                                                                    ',
 '                   - No existe el usuario.                                             ',

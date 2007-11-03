@@ -5,28 +5,28 @@ create procedure dbo.spu_valor_cambio
     id_moneda   integer,
     vigente_desde date,
     valor_dolar numeric(12,7)
-);
+) returns integer;
 
     if not exists (select 1
                     from moneda m
                     where m.mda_id = id_moneda) then
        RAISE EXCEPTION -746, 0, 'No existe la moneda. [9]';
-       return;
+       return -1;
     end if;
 
     if vigente_desde is null then
        RAISE EXCEPTION -746, 0, 'No se indico la fecha de inicio de la vigencia. [10]';
-       return;
+       return -1;
     end if;
 
     if valor_dolar is null then
        RAISE EXCEPTION -746, 0, 'No se indico el tipo de cambio. [11]';
-       return;
+       return -1;
     end if;
 
     if valor_dolar <= 0 then
        RAISE EXCEPTION -746, 0, 'El tipo de cambio debe ser mayor a cero. [12]';
-       return;
+       return -1;
     end if;
 
     if exists (select 1
@@ -72,6 +72,7 @@ create procedure dbo.spu_valor_cambio
     end;
     end if;
 
+    return 0;
 end procedure
 document
 'Fecha de Creacion: 2007-10-15                                                          ',
@@ -90,7 +91,7 @@ document
 '                   Si existe un valor de cambio para esa moneda con esa vigencia, lo   ',
 '                   actualiza.                                                          ',
 '                                                                                       ',
-'Resultados:        Ninguno.                                                            ',
+'Resultados:        Cero si no hay errores.                                             ',
 '                                                                                       ',
 'Errores Reportados:                                                                    ',
 '                   - No existe la moneda.                                              ',

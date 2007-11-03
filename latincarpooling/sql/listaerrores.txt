@@ -3,7 +3,7 @@ Nro.        Descripcion
   1         No existe el usuario. [1]
   2         No existe el programa de mensajeria. [2]
   3         No se indico el nombre de usuario. [3]
-  4
+  4         No existe el tramo. [4]
   5         No existe el nombre de usuario para ese usuario y programa de mensajería. [5]
   6         No se ingreso un usuario. [6]
   7         No se ingreso la contraseña. [7]
@@ -12,8 +12,8 @@ Nro.        Descripcion
  10         No se indico la fecha de inicio de la vigencia. [10]
  11         No se indico el tipo de cambio. [11]
  12         El tipo de cambio debe ser mayor a cero. [12]
- 13
- 14
+ 13         No se indico el costo fijo del tramo. [13]
+ 14         El costo fijo del tramo debe ser mayor a cero. [14]
  15         No existe el combustible. [15]
  16         No existe el pais. [16]
  17         No se indico el precio del litro de combustible. [17]

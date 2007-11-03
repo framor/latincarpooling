@@ -5,25 +5,25 @@ create procedure dbo.spu_usuario_mensajeria
     id_usuario integer,
     id_programa integer,
     nombre_usuario char(30)
-);
+) returns integer;
 
     if not exists (select 1
                     from usuario u
                     where u.uio_id = id_usuario) then
        RAISE EXCEPTION -746, 0, 'No existe el usuario. [1]';
-       return;
+       return -1;
     end if;
 
     if not exists (select 1
                     from programamensajeria p
                     where p.pma_id = id_programa) then
        RAISE EXCEPTION -746, 0, 'No existe el programa de mensajeria. [2]';
-       return;
+       return -1;
     end if;
 
     if nombre_usuario is null or nombre_usuario = '' then
        RAISE EXCEPTION -746, 0, 'No se indico el nombre de usuario. [3]';
-       return;
+       return -1;
     end if;
 
     if exists (select 1
@@ -40,6 +40,7 @@ create procedure dbo.spu_usuario_mensajeria
         (id_programa, id_usuario, nombre_usuario);
     end if;
 
+    return 0;
 end procedure
 document
 'Fecha de Creacion: 2007-10-13                                                          ',
@@ -54,7 +55,7 @@ document
 'Descripcion:       Agrega o modifica los datos de un usuario de mensajería para el     ',
 '                   usuario y el programa de mensajería indicado.                       ',
 '                                                                                       ',
-'Resultados:        Ninguno.                                                            ',
+'Resultados:        Cero si no hay errores.                                             ',
 '                                                                                       ',
 'Errores Reportados:                                                                    ',
 '                   - No existe el usuario.                                             ',
