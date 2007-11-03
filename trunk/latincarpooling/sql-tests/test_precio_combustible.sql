@@ -33,19 +33,19 @@ execute procedure dbo.spu_precio_combustible (3, 1, '10-29-2007', null)
 execute procedure dbo.spu_precio_combustible (3, 1, '10-29-2007', -3.14)
 ;
 
---Inserta el tipo de cambio al 29/10/2007.
+--Inserta el precio del combustible al 29/10/2007.
 execute procedure dbo.spu_precio_combustible (3, 1, '10-29-2007', 0.50)
 ;
 
---Inserta el tipo de cambio al 01/01/2001
+--Inserta el precio del combustible al 01/01/2001
 execute procedure dbo.spu_precio_combustible (3, 1, '01-01-2001', 0.25)
 ;
 
---Inserta el tipo de cambio al 01/01/2008
+--Inserta el precio del combustible al 01/01/2008
 execute procedure dbo.spu_precio_combustible (3, 1, '01-01-2008', 0.95)
 ;
 
---Inserta el tipo de cambio al 01/03/2002
+--Inserta el precio del combustible al 01/03/2002
 execute procedure dbo.spu_precio_combustible (3, 1, '03-01-2002', 0.27)
 ;
 
@@ -57,7 +57,7 @@ and pce_pis_id = 1
 order by pce_vigentedesde
 ;
 
---Actualiza el tipo de cambio al 29/10/2007.
+--Actualiza el precio del combustible al 29/10/2007.
 execute procedure dbo.spu_precio_combustible (3, 1, '10-29-2007', 0.54)
 ;
 

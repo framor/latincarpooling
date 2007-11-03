@@ -1,6 +1,6 @@
 /* Realiza el testeo de los siguientes procedimientos:
         sps_verificar_usuario
-        
+
 */
 
 -- Reporta que no se ingreso el usuario.

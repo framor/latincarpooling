@@ -6,35 +6,35 @@ create procedure dbo.spu_precio_combustible
     id_pais     integer,
     vigente_desde date,    
     precio_litro numeric(7,4)    
-);
+) returns integer;
 
     if not exists (select 1
                     from combustible c
                     where c.cle_id = id_combustible) then
        RAISE EXCEPTION -746, 0, 'No existe el combustible. [15]';
-       return;
+       return -1;
     end if;
     
     if not exists (select 1
                     from pais p
                     where p.pis_id = id_pais) then
        RAISE EXCEPTION -746, 0, 'No existe el pais. [16]';
-       return;
+       return -1;
     end if;
 
     if vigente_desde is null then
        RAISE EXCEPTION -746, 0, 'No se indico la fecha de inicio de la vigencia. [10]';
-       return;
+       return -1;
     end if;
 
     if precio_litro is null then
        RAISE EXCEPTION -746, 0, 'No se indico el precio del litro de combustible. [17]';
-       return;
+       return -1;
     end if;
 
     if precio_litro <= 0 then
        RAISE EXCEPTION -746, 0, 'El precio del litro de combustible debe ser mayor a cero. [18]';
-       return;
+       return -1;
     end if;
 
     if exists (select 1
@@ -82,7 +82,8 @@ create procedure dbo.spu_precio_combustible
         (id_combustible, id_pais, vigente_desde, precio_litro, vigencia_hasta);
     end;
     end if;
-
+	
+    return 0;
 end procedure
 document
 'Fecha de Creacion: 2007-10-28                                                          ',
@@ -102,7 +103,7 @@ document
 '                   luego inserta el nuevo tipo de cambio. Si existe un valor de        ',
 '                   combustible para ese país con esa vigencia, lo actualiza.           ',
 '                                                                                       ',
-'Resultados:        Ninguno.                                                            ',
+'Resultados:        Cero si no hay errores.                                             ',
 '                                                                                       ',
 'Errores Reportados:                                                                    ',
 '                   - No existe el combustible.                                         ',

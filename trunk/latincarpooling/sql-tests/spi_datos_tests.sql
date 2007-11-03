@@ -79,7 +79,7 @@ create procedure dbo.spi_datos_tests ();
         where rdo_id > 10;
 
         insert into viajepasajeropend
-        (vpp_vje_id, vpp_importemaximo, vpp_uoi_id)
+        (vpp_vje_id, vpp_importemaximo, vpp_uio_id)
         select rdo_id, 0, 666
         from recorrido
         where rdo_id > 10;
