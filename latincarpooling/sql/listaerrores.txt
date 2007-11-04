@@ -18,5 +18,5 @@ Nro.        Descripcion
  16         No existe el pais. [16]
  17         No se indico el precio del litro de combustible. [17]
  18         El precio del litro de combustible debe ser mayor a cero. [18]
-            
+ 19         Supero la cantidad de tramos sin encontrar al destino. [19]           
             
