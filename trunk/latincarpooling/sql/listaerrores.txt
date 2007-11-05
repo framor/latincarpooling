@@ -19,4 +19,10 @@ Nro.        Descripcion
  17         No se indico el precio del litro de combustible. [17]
  18         El precio del litro de combustible debe ser mayor a cero. [18]
  19         Supero la cantidad de tramos sin encontrar al destino. [19]           
-            
+ 20         La ciudad origen no existe. [20]
+ 21         La ciudad destino no existe. [21]
+ 22         El importe es menor a cero. [22]
+ 23         La cantidad de lugares totales es menor que los lugares libres. [23]
+ 24         La cantidad de lugares libres es menor a cero. [24]
+ 25         La fecha menor debería ser mas chica que la fecha mayor. [25]
+ 26         No existe el id del recorrido indicado. [26]

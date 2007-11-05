@@ -1,5 +1,5 @@
 -- tru_viaje_conductor
-DROP TRIGGER tru_viaje_conductor;
+-- DROP TRIGGER tru_viaje_conductor;
 
 CREATE TRIGGER tru_viaje_conductor
 UPDATE ON viajeconductor

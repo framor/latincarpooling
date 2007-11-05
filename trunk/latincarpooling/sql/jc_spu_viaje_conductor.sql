@@ -5,7 +5,7 @@ create procedure dbo.spu_viaje_conductor
 (
     id_viaje LIKE viaje.vje_id,
     id_conductor LIKE usuario.uio_id,
-    id_recorrido LIKE viaje.rdo_id,
+    id_recorrido LIKE viaje.vje_rdo_id,
     fecha_menor LIKE viaje.vje_fechamenor,
     fecha_mayor LIKE viaje.vje_fechamayor,
     lugares LIKE viajeconductor.vcr_cantlugares,
@@ -20,27 +20,27 @@ create procedure dbo.spu_viaje_conductor
     end if;
 
     if importe < 0 AND importe_total < 0 then
-       RAISE EXCEPTION -746, 0, 'El importe es menor a cero. [2]';
+       RAISE EXCEPTION -746, 0, 'El importe es menor a cero. [22]';
        return;
     end if;
 
     if lugares < lugares_libres then
-       RAISE EXCEPTION -746, 0, 'La cantidad de lugares totales es menor que los lugares libres. [3]';
+       RAISE EXCEPTION -746, 0, 'La cantidad de lugares totales es menor que los lugares libres. [23]';
        return;
     end if;
 
     if lugares_libres < 0 then
-       RAISE EXCEPTION -746, 0, 'La cantidad de lugares libres es menor a cero. [4]';
+       RAISE EXCEPTION -746, 0, 'La cantidad de lugares libres es menor a cero. [24]';
        return;
     end if;
 
     if fecha_menor > fecha_mayor then
-       RAISE EXCEPTION -746, 0, 'La fecha menor debería ser mas chica que la fecha mayor. [5]';
+       RAISE EXCEPTION -746, 0, 'La fecha menor debería ser mas chica que la fecha mayor. [25]';
        return;
     end if;
 
     if not exists (select 1 from recorrido where rdo_id = id_recorrido) then
-       RAISE EXCEPTION -746, 0, 'No existe el id del recorrido indicado. [6]';
+       RAISE EXCEPTION -746, 0, 'No existe el id del recorrido indicado. [26]';
        return;
     end if;
 
@@ -90,30 +90,40 @@ end procedure
 document
 'Fecha de Creacion: 2007-10-15                                                          ',
 '                                                                                       ',
-'Autor:             JCapanegra                                                           ',
+'Autor:             JCapanegra                                                          ',
 '                                                                                       ',
-'Parametros:
-'                   id_viaje ',
-'                   id_conductor',
-'                   id_recorrido',
-'                   fecha_menor',
-'                   fecha_mayor',
-'                   lugares LIKE viajeconductor.vcr_cantlugares,',
-'                   lugares_libres LIKE viajeconductor.vcr_lugareslibres,',
-'                   importe LIKE viajeconductor.vcr_importe,',
-'                   importe_total LIKE viajeconductor.vcr_importeviaje                                                                    ',
-'                   nombre_usuario      Nombre del usuario.                             ',
-'                   contrasena_hash     Hash MD5 de la contraseña                       ',
+'Parametros:                                                                            ',
+'                   id_viaje            El id del viaje a actualizar o agregar.         ',
+'                   id_conductor        El id del usuario conductor para este viaje.    ',
+'                   id_recorrido        El id del recorrido que se efectuara en el      ',
+'                                       viaje.                                          ',
+'                   fecha_menor         Primer dia en el cual el usuario desea o puede  ',
+'                                       realizar el viaje.                              ',
+'                   fecha_mayor         Ultimo dia en el cual el usuario desea o puede  ',
+'                                       realizar el viaje.                              ',
+'                   lugares             Cantidad de lugares inicialmente libres para    ',
+'                                       pasajeros.                                      ',
+'                   lugares_libres      Cantidad de lugares libres actualmente.         ',
+'                   importe             Importe que debera pagar cada pasajero.         ',
+'                   importe_total       Importe que pagaran en conjunto los conductores ',
+'                                       y los pasajeros. Representa el costo total del  ',
+'                                       viaje para el dueño del vehiculo.               ',
 '                                                                                       ',
-'Descripcion:       Verifica que el nombre de usuario y la contraseña indicada sean las ',
-'                   correctas con respecto a la información almacenada.                 ',
+'Descripcion:       Inserta o actualiza un nuevo viaje de un conductor, agregando los   ',
+'                   registros correspondientes a las tablas viaje y viajeconductor.     ',
+'                   Si el id del viaje ya existe los datos serán actualizados, sino de  ',
+'                   se agregará un nuevo viaje.                                         ',
 '                                                                                       ',
-'Resultados:        ID del usuario si la informacion es correcta.                       ',
-'                   Cero en otro caso.                                                  ',
+'Resultados:        Este procedimiento no devuelve ningún resultado                     ',
 '                                                                                       ',
 'Errores Reportados:                                                                    ',
-'                   - No se ingresó un usuario.                                         ',
-'                   - No se ingresó la contraseña.                                      ',
+'                   - No existe el id del usuario conductor. [1]                        ',
+'                   - El importe es menor a cero. [22]                                  ',
+'                   - La cantidad de lugares totales es menor que los lugares libres.   ',
+'                     [23]                                                              ',
+'                   - La cantidad de lugares libres es menor a cero. [24]               ',
+'                   - La fecha menor debería ser mas chica que la fecha mayor. [25]     ',
+'                   - No existe el id del recorrido indicado. [26]                      ',
 '                                                                                       '
 with listing in 'informix_warn'
 ;

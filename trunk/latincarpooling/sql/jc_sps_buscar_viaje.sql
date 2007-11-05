@@ -10,12 +10,12 @@ create procedure dbo.sps_buscar_viaje
     DEFINE id_viaje LIKE dbo.viaje.vje_id;
 
     if not exists (select 1 from ciudad where cad_id = id_ciudad_origen) then
-       RAISE EXCEPTION -746, 0, 'La ciudad origen no existe. [1]';
+       RAISE EXCEPTION -746, 0, 'La ciudad origen no existe. [20]';
        return;
     end if;
 
     if not exists (select 1 from ciudad where cad_id = id_ciudad_destino) then
-       RAISE EXCEPTION -746, 0, 'La ciudad destino no existe. [2]';
+       RAISE EXCEPTION -746, 0, 'La ciudad destino no existe. [21]';
        return;
     end if;
 
@@ -47,8 +47,8 @@ document
 '                   Si no hay ninguno, no devuelve ninguna fila.                        ',
 '                                                                                       ',
 'Errores Reportados:                                                                    ',
-'                   - La ciudad origen no existe.                                       ',
-'                   - La ciudad destino no existe.                                      ',
+'                   - La ciudad origen no existe. [20]                                  ',
+'                   - La ciudad destino no existe. [21]                                 ',
 '                                                                                       '
 with listing in 'informix_warn'
 ;
