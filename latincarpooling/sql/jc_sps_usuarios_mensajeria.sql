@@ -11,7 +11,7 @@ create procedure dbo.sps_usuarios_mensajeria
     DEFINE nombre_programa LIKE dbo.programamensajeria.pma_nombre;
 
     if not exists (select 1 from usuario where uio_id = id_usuario) then
-       RAISE EXCEPTION -746, 0, 'No existe el id del usuario. [1]';
+       RAISE EXCEPTION -746, 0, 'No existe el usuario. [1]';
        return;
     end if;
 
@@ -32,18 +32,18 @@ document
 'Autor:             JCapanegra                                                          ',
 '                                                                                       ',
 'Parametros:                                                                            ',
-'                   id_ciudad_origen      Ciudad inicial del viaje.                     ',
-'                   id_ciudad_destino     Ciudad final del viaje.                       ',
+'                   id_usuario            El usuario del que se obendran los datos de   ',
+'                                         mensajería.                                   ',
 '                                                                                       ',
-'Descripcion:       Realiza la búsqueda de los viajes de conductores que existen        ',
-'                   registrados entre las ciudades especificadas.                       ',
+'Descripcion:       Selecciona todos los datos de los usuarios de mensajería que tiene  ',
+'                   el usuario que se indico por parámetro al procedimiento.            ',
 '                                                                                       ',
-'Resultados:        Id de los viajes que existen entre ambas ciudades.                  ',
-'                   Si no hay ninguno, no devuelve ninguna fila.                        ',
+'Resultados:        Las filas con los datos de los usuarios del mensajería.             ',
+'                   Cada fila tiene el nombre de usuario, el id de programa y el nombre ',
+'                   del programa.                                                          ',
 '                                                                                       ',
 'Errores Reportados:                                                                    ',
-'                   - La ciudad origen no existe.                                       ',
-'                   - La ciudad destino no existe.                                      ',
+'                   - No existe el usuario. [1]                                  ',
 '                                                                                       '
 with listing in 'informix_warn'
 ;

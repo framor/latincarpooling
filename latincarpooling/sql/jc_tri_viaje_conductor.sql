@@ -1,5 +1,5 @@
 -- tri_viaje_conductor
-DROP TRIGGER tri_viaje_conductor;
+-- DROP TRIGGER tri_viaje_conductor;
 
 CREATE TRIGGER tri_viaje_conductor
 INSERT ON viajeconductor
